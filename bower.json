@@ -1,0 +1,23 @@
+{
+  "name": "introduction-about-typescript",
+  "version": "0.1.0",
+  "main": [
+    "js/reveal.js",
+    "css/reveal.css"
+  ],
+  "license": "MIT",
+  "description": "The HTML Presentation Framework",
+  "authors": [
+    "Frank Qiu"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QuanhuQiu/introduction-about-typescript.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ]
+}
