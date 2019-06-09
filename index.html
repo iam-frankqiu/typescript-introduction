@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>A chinese introduction about typescript</title>
 
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/reveal.css">
@@ -27,13 +27,50 @@
 			<div class="slides">
 				<section>
 					<section>
-						slide2
+						<h2>什么是typescript?</h2>
+					</section>
+					<section>TypeScript具有类型系统，且是JavaScript的超集。 它可以编译成普通的JavaScript代码。 TypeScript支持任意浏览器，任意环境，任意系统并且是开源的。</section>
+				</section>
+
+				<section>
+					<section><h2>为什么要用typescript?</h2></section>
+					<section>Javascript is fine, but ...</section>
+					<section data-template="markdown">
+						<p>
+							你们一定写过类似这样的代码...
+						</p>
+						<pre>
+							<code>const arr = (res && res.data && res.data.data &&
+
+Array.isArray(res.data.data) && res.data.data) || []
+</code></pre>
+						<p>
+							也许也可以更加优雅一点...
+						</p>
+						<pre><code>import get from 'lodash/get'
+
+const arr = get(res, 'data.data', [])
+						</code></pre>
 					</section>
 					<section>
-						slide3
+						<p>但如果是typescript的话，可以这样写...</p>
+						<pre><code>interface IResponse {
+  data: {
+    data: array
+  }							
+}
+
+function getResponse (res: IResponse) {
+  const arr = res.data.data
+}
+</code></pre>
 					</section>
+					<section>这就是typescript的类型系统</section>
+					<section>但typescript的精彩还远不止这些，让我们系统地来了解下吧！</section>
 				</section>
-				<section>Slide 2</section>
+				<section>
+					
+				</section>
 			</div>
 		</div>
 
