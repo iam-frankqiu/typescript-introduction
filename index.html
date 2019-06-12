@@ -69,7 +69,172 @@ function getResponse (res: IResponse) {
 					<section>但typescript的精彩还远不止这些，让我们系统地来了解下吧！</section>
 				</section>
 				<section>
-					
+					<section>
+						让我们直接开始上手吧！
+					</section>
+						<section>
+							让我们直接编写一个greeter.ts的文件
+							<p>
+								但是里面内容完全是js的代码
+							</p>
+							<pre><code>function greeter(person) {
+	return "Hello, " + person;
+}
+						
+let user = "Jane User";
+
+document.body.innerHTML = greeter(user);</code></pre>
+接着在命令行运行
+<pre><code>npx typescript tsc greeter.ts</code></pre>
+</section>
+<section>
+	<p>
+		这个时候你会发现在同样的路径下输出了一个新的文件greeter.js
+	</p>
+	<p>
+		内容也是和之前的ts文件内容是一样的
+	</p>
+							这个时候我们再把代码改下
+							<pre><code>function greeter(person: string) {
+  return "Hello, " + person;
+}
+
+let user = [0, 1, 2];
+
+document.body.innerHTML = greeter(user);</code></pre>
+		再重新进行编译
+						</section>
+						<section>
+							会看到代码报了一个错，
+							<pre>
+								<code>error TS2345: Argument of type 'number[]' is not
+assignable to parameter of type 'string'.</code>
+							</pre>
+							但是文件依然输出了
+							<pre><code>function greeter(person) {
+  return "Hello, " + person;
+}
+var user = [1, 2, 3];
+document.body.innerHTML = greeter(user);</code></pre>
+						</section>
+						<section>
+							<p>结论其实是</p>
+							TypeScript提供了静态的代码分析，它可以分析代码结构和提供的类型注解。
+						</section>
+						<section>
+							<p>要注意的是</p>
+							就算你的代码里有错误，你仍然可以使用TypeScript。但在这种情况下，TypeScript会警告你代码可能不会按预期执行。
+						</section>
+						<section>
+							好了，现在，你们可以把手上的代码文件的后缀名全部改成ts或者tsx, 然后在命令行手动编译就可以了。
+						</section>
+						<section>
+							当然了，现实生活中，这是不可能的...
+						</section>
+						<section>
+							因为这些事情都交给webpack去做了
+						</section>
+				</section>
+				<section>
+					<section>
+						typescript在webpack和react里面的应用
+					</section>
+					<section>
+							首先创建一个webpack.config.js文件
+					</section>
+					<section>
+						<img src="./image/webpack.png" alt="" style="width: 100%;height: 100%;object-fit: contain">
+					</section>
+					<section>
+						主要的重点在于module的rules模块
+					</section>
+					<section>
+						说白了，就是我们需要告诉webpack用哪些loader来解析ts||tsx文件
+					</section>
+					<section>
+						比较常用的loader有以下几个
+
+
+						<ul>
+							<li>ts-loader</li>
+
+							<li>awesome-typescript-loader</li>
+
+							<li>tslint-loader</li>
+						</ul>
+					</section>
+					<section>
+						主要来比较下前面两个的异同
+						<img src="./image/difference.png" alt="">
+					</section>
+					<section>
+						总之一句话，awesome-typescript-loader编译速度比ts-loader快就对了
+					</section>
+					<section>
+						等等，我们已经告诉了webpack用什么loader来解析ts||txs文件，
+						那我们是不是也应该告诉webpack哪些文件需要解析哪些文件不需要解析呢？
+					</section>
+					<section>
+						接下来就要轮到tsconfig.json文件闪亮登场了
+					</section>
+				</section>
+				<section>
+					<section>
+						tsconfig.json文件的配置
+					</section>
+					<section>
+						<p>
+							首先，一般情况下，tsconfig.json文件是放在当前目录的根目录下面
+						</p>
+						tsconfig.json文件指定了用来编译这个项目的编译选项
+					</section>
+					<section>
+						一个项目可以通过以下两种方式来使用tsconfig.json进行编译<br>
+						<ul>
+							<li>不带任何输入文件的情况下调用tsc，编译器会从当前目录开始去查找tsconfig.json文件，逐级向上搜索父目录。
+							</li>
+							<li>
+							不带任何输入文件的情况下调用tsc，且使用命令行参数--project（或-p）指定一个包含tsconfig.json文件的目录。
+							</li>
+						</ul>
+					</section>
+					<section>
+						先来随便看看一个tsconfig.json文件长什么样子
+						<img src="./image/tsconfig.png" alt="">
+					</section>
+					<section>
+						你也可以使用include或者exclude属性
+						<pre><code>"include": ["src"],
+"exclude": ["node_modules"]</code></pre>
+					</section>
+					<section>
+							"compilerOptions"可以被忽略，这时编译器会使用默认值。在这里查看完整的<a href='https://www.typescriptlang.org/docs/handbook/compiler-options.html'>编译器选项</a>列表。
+					</section>
+					<section>
+							"files"指定一个包含相对或绝对文件路径的列表。 "include"和"exclude"属性指定一个文件glob匹配模式列表。 支持的glob通配符有：
+							<ul>
+								<li>* 匹配0或多个字符（不包括目录分隔符）</li>
+								<li>? 匹配一个任意字符（不包括目录分隔符）</li>
+								<li>**/ 递归匹配任意子目录</li>
+							</ul>
+					</section>
+					<section>
+						还有两点需要注意的是
+						<ul>
+							<li>tsconfig.json文件可以是个空文件，那么所有默认的文件（如上面所述）都会以默认配置选项编译。</li>
+							<li>在命令行上指定的编译选项会覆盖在tsconfig.json文件里的相应选项。</li>
+						</ul>
+					</section>
+					<section>
+						如果你觉得这些都太麻烦的话，还可以使用另外一个顶级属性extends直接继承别的配置文件
+						<pre><code>{
+  "extends": "./configs/base",
+  "files": [
+    "main.ts",
+    "supplemental.ts"
+  ]
+}</code></pre>
+					</section>
 				</section>
 			</div>
 		</div>
